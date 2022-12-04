@@ -7,10 +7,12 @@ import { useEffect, useState } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom"; 
 
 //Pages
+import CreateTag from './pages/CreateTag';
 import DashboardPage from './pages/DashboardPage.js';
 import LandingPage from './pages/LandingPage.js';
 import LoginPage from './pages/LoginPage.js';
 import SignUpPage from './pages/SignUpPage.js';
+import TagUs from './pages/TagUs';
 
 //Firebase
 import { initializeApp } from "firebase/app"; 
@@ -18,23 +20,24 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyBhSYajHWQHWJfQJ3qTEHakR60-GrbyQBI",
-  authDomain: "six-exercise.firebaseapp.com",
-  projectId: "six-exercise",
-  storageBucket: "six-exercise.appspot.com",
-  messagingSenderId: "1062910567996",
-  appId: "1:1062910567996:web:9b339941106c9872208539"
+  apiKey: "AIzaSyBc9QBcJRuu3CbYUU5WQHaEtk67D36U3_I",
+  authDomain: "final-project-6e412.firebaseapp.com",
+  projectId: "final-project-6e412",
+  storageBucket: "final-project-6e412.appspot.com",
+  messagingSenderId: "1073747175134",
+  appId: "1:1073747175134:web:3cccaf09076c1e0de2c44f"
 };
-
 
 function App() {
   const [appInitialized, setAppInitalized] = useState (false);
-  //Checking if the information is loading, user is logged in, and we get user info
   const [isLoading, setIsLoading] = useState (true);
   const [isLoggedIn, setIsLoggedIn] = useState (false);
   const [userInfo, setUserInfo] = useState ({});
+  //New set states 
+  //We want to tag other users' posts so we need information about the user's tags and who we're following
+  const [userTags, setUserTags] = useState([]); 
+  const [isFollowing, setIsFollowed] = useState(false);
 
-  //Ensuring we initalize firebase one time (and not everytime the browser renders)
   useEffect(()=> {
     //Initalize firebase
     initializeApp(firebaseConfig);
@@ -43,9 +46,7 @@ function App() {
   }, []); 
 
   useEffect(() => {
-    //If user is logged in (app is initalized), then run the following code
     if (appInitialized) {
-      //Firebase abstraction (copied from firebase) -- just know that this should return a user's information as an object
       const auth = getAuth();
       onAuthStateChanged(auth, (user)=> {
         //If the user exist in firebase...
@@ -82,7 +83,7 @@ function App() {
     },
     {
       path: "/signup",
-      element: <LandingPage
+      element: <SignUpPage
         isLoggedIn = {isLoggedIn}
         setIsLoggedIn = {setIsLoggedIn} 
         setUserInfo = {setUserInfo} 
@@ -98,15 +99,42 @@ function App() {
       />,
     },
     {
-      path: "/dashboard",
+      path: "/dashboard/:id",
       element: <DashboardPage
         isLoggedIn = {isLoggedIn}
         setIsLoggedIn = {setIsLoggedIn}
         isLoading = {isLoading}
         userInfo = {userInfo}
+        setUserInfo = {setUserInfo}
       
       />,
     },
+    {
+      path: "/createtag",
+      element: <CreateTag
+        isLoggedIn = {isLoggedIn}
+        setIsLoggedIn = {setIsLoggedIn}
+        isLoading = {isLoading}
+        userInfo = {userInfo}
+        userTags = {userTags}
+        setUserTags = {setUserTags}
+      
+      />,
+    },
+    {
+      path: "/tagging",
+      element: <TagUs
+        isLoggedIn = {isLoggedIn}
+        setIsLoggedIn = {setIsLoggedIn}
+        isLoading = {isLoading}
+        isFollowing = {isFollowing}
+        setIsFollowed = {setIsFollowed}
+        userInfo = {userInfo}
+        userTags = {userTags}
+        setUserTags = {setUserTags}
+      />,
+    },
+
 
 ]);
   return (

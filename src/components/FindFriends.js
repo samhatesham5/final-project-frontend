@@ -1,6 +1,6 @@
 import React from 'react';
 
-function SideHeader(){
+function FindFriends(){
 
     return(
         <div></div>
@@ -8,4 +8,4 @@ function SideHeader(){
 
 }
 
-export default SideHeader; 
+export default FindFriends; 

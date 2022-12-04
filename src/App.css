@@ -8,3 +8,68 @@
     margin: 0;
     box-sizing: border-box;
 }
+
+/*
+
+---Header styles---
+
+*/
+
+nav {
+    display: flex;
+    flex-direction: row;
+    margin: 25px; 
+
+    
+}
+
+.links{
+    display:flex;
+    flex-direction: row;
+    padding-left:  70%;
+}
+
+.button {
+    background-color: #05BC74;
+    border: solid #05BC74;
+    border-radius: 28px;
+    color: white;
+    min-width: 50px; 
+    max-width: 150px;
+    padding: 5px 25px;
+    text-decoration: none;
+    text-align: center;
+
+}
+
+.loginButton {
+    background-color: white;
+    color: #05BC74;
+
+}
+
+.button:last-child{
+    margin-left: 25px; 
+}
+
+/*
+
+--- LANDING PAGE ---
+
+*/ 
+
+.landingContent {
+    display: flex;
+    flex-direction: column;
+    margin: 150px 150px; 
+
+}
+
+.landingContent > h2,  .landingContent > p {
+    padding-bottom: 15px;
+}
+ 
+.landingButton:last-child {
+    margin: 0px; 
+}
+
