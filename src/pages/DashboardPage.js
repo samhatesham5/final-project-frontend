@@ -4,7 +4,7 @@ import FindFriends from '../components/FindFriends';
 import ListOfPosts from '../components/ListOfPosts';
 import WritePost from '../components/WritePost';
 
-function DashboardPage(){
+function DashboardPage( {isLoggedIn, setIsLoggedIn, isLoading, userInfo, setUserInfo}){
 
     return(
         <div>
@@ -12,7 +12,13 @@ function DashboardPage(){
             {/* UserSection */}
             <section className='userSection'>
                 <div className='dashUser'> 
-                    <DashNav /> 
+                    <DashNav 
+                        isLoggedIn = {isLoggedIn}
+                        setIsLoggedIn = {setIsLoggedIn}
+                        isLoading = {isLoading}
+                        userInfo = {userInfo}
+                        setUserInfo = {setUserInfo}
+                    /> 
                 </div>
             </section>
             {/*Main */}
@@ -20,7 +26,7 @@ function DashboardPage(){
                 <div className='searchBar'> 
                     <form className='searchForm'>
                         <input type="text" placeholder='search'/> 
-                        <button type="submit">icon</button>
+                        <button type="submit">Icon</button>
                     </form>
                 </div>
                 <div>
@@ -28,10 +34,12 @@ function DashboardPage(){
                 </div>
                 {/* We'll revisit this because if you search for friends, different component shows up there*/}
                 <div className='dashContent'>
+                    {/* Will store all of our posts and map over them */}
                     <listOfPosts/>
                     <FindFriends /> 
                 </div>
             </section>
+            {/* Should only be one account there */}
             <section className=''>
                 <p>Placeholder until we figure something out</p>
             </section>

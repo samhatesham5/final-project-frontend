@@ -1,6 +1,10 @@
+//React
 import React from 'react';
 import { Link } from "react-router-dom";
 import Header from '../components/Header';
+//Font Awesome 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {faTag} from '@fortawesome/free-solid-svg-icons';
 
 
 function LandingPage(){
@@ -11,13 +15,18 @@ function LandingPage(){
             <hr /> 
             <div className='landingPage'>
                 <div className='landingContent'>
-                    <h2>Landing Page</h2> 
-                    <p>Works works works</p>
+                    <div className='headerOneTag'>
+                        <h1>You're it!</h1> 
+                        <FontAwesomeIcon icon={faTag}/>
+                    </div>
+                    <h2>Organize your friends' posts by tags.</h2>
                     <Link to="/signup" className='landingButton button'>
                         <p>Get Started</p>
                     </Link>
                 </div>
-                <img src="#" alt="two girls taking a selfie"/>
+                <img src="https://github.com/samhatesham5/final-project-frontend/blob/main/src/assets/4186624.jpg?raw=true" 
+                    alt="two girls taking a selfie" 
+                    style={{width: '500px'}}/>
             </div>
 
         </div>

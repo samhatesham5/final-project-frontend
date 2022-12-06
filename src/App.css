@@ -20,7 +20,11 @@ nav {
     flex-direction: row;
     margin: 25px; 
 
-    
+}
+
+.home, .home:visited {
+    color: black;
+    text-decoration: none;
 }
 
 .links{
@@ -48,6 +52,12 @@ nav {
 
 }
 
+.button:hover {
+    background-color: #FBC424;
+    color: white;
+    border: solid #FBC424;
+}
+
 .button:last-child{
     margin-left: 25px; 
 }
@@ -61,15 +71,112 @@ nav {
 .landingContent {
     display: flex;
     flex-direction: column;
-    margin: 150px 150px; 
-
 }
 
-.landingContent > h2,  .landingContent > p {
-    padding-bottom: 15px;
+.headerOneTag > h1,  .landingContent > h2 {
+    padding-bottom: 20px;
+}
+
+.landingContent > h2 {
+    font-weight: normal;
 }
  
 .landingButton:last-child {
     margin: 0px; 
+}
+
+.landingPage {
+    align-items: center;
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: row;
+
+}
+
+.headerOneTag {
+    display: flex;
+    flex-direction: row;
+}
+
+.headerOneTag > svg {
+    font-size: 45px; 
+    padding-left: 30px;
+}
+
+/*
+
+--- Create Your Own Tags Page ---
+
+*/
+
+
+.createTag {
+    background-image: url('https://github.com/samhatesham5/final-project-frontend/blob/main/src/assets/green_gradient_background.png?raw=true');
+    background-repeat: no-repeat;
+    background-position:center;
+    background-size: cover;
+    min-height: 100vh;
+
+}
+
+.createTagContent {
+    display: flex; 
+    position: relative;
+    flex-direction: column;
+    top: 100px; 
+    margin: 0px 100px; 
+    border: solid black; 
+    background-color: white;
+    padding: 20px;
+    flex-basis: 60%
+}
+
+.createTagHeader{
+    display:flex;
+    justify-content: center;
+}
+
+.createTagHeader > h1 {
+    padding-left: 10px; 
+    padding-bottom: 20px;
+}
+
+.createForm{
+    display: flex;
+    flex-direction: column;
+}
+
+.createTagBody {
+    text-align: center;
+    margin: 0 100px; 
+}
+
+.createTagBody > p {
+    padding-bottom: 20px; 
+}
+
+.createTagInput {
+    height: 40px; 
+}
+
+/*
+
+--- ADJUSTING MAJOR ISSUES FOR MOBILE --- 
+
+*/ 
+
+@media (max-width: 896px) {
+    .landingPage {
+        display: flex; 
+        flex-direction: column;
+    }
+    .landingContent{
+        margin: 50px 0 50px;
+    }
+
+    .links {
+        padding-left: 45%;
+    }
+    
 }
 

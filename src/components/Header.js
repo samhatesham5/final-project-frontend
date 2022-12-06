@@ -5,9 +5,11 @@ function Header(){
 
     return(
         <nav>
-            <h2>tagit</h2>
+            <Link to="/" className='home'>
+                <h2>tagit</h2>
+            </Link>
             <div className='links'>
-                <Link to="/signup" className='button'>
+                <Link to="/signup" className='signUpButton button'>
                     <p >Sign Up</p>
                 </Link>
                 <Link to="/login" className='loginButton button'>

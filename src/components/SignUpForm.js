@@ -1,10 +1,9 @@
 import React from 'react';
 
-function SignUpForm(){
+function SignUpForm({signUpUser}){
 
     return (
-        <form className="FormElement">
-            {/* onSubmit={(e) => loginUser(e)} */}
+        <form className="FormElement" onSubmit={(e) => signUpUser(e)} >
             {/*UserName label*/}
             <label htmlFor="email">Email</label>
             <input type="text" name="email"/>
