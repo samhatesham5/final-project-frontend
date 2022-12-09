@@ -83,12 +83,6 @@ function DashboardPage( {app, isLoggedIn, setIsLoggedIn, isLoading, userInfo, se
             </section>
             {/*Main */}
             <section className='mainContent'>
-                <div className='searchBar'> 
-                    <form className='searchForm'>
-                        <input type="text" placeholder='search'/> 
-                        <button type="submit">Icon</button>
-                    </form>
-                </div>
                 <div>
                     <WritePost  
                         createPost= {createPost}

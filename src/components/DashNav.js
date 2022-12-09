@@ -3,6 +3,10 @@ import { Link } from "react-router-dom";
 import { getAuth, signOut } from "firebase/auth";
 import { useNavigate } from 'react-router'; 
 
+//Font Awesome 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {faUser} from '@fortawesome/free-solid-svg-icons';
+
 function DashNav( {isLoggedIn, setIsLoggedIn, isLoading, userInfo, setUserInfo} ){
     //Navigating out of dashboard
     const navigate = useNavigate(); 
@@ -30,7 +34,7 @@ function DashNav( {isLoggedIn, setIsLoggedIn, isLoading, userInfo, setUserInfo} 
     return(
         <div>
             <div className='userBlurb'>
-                <p>default icon</p>
+                <img src="" alt=""/>
                 {/*They can't sign in with username but this is what's displayed */}
                 <p>Username</p>
             </div>

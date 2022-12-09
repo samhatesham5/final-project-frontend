@@ -161,13 +161,41 @@ nav {
 
 /*
 
---- STYLING POSTS ---
+--- DASHBOARD ---
 
 */
 
-.postWrapper{
-    
+.dashboardWrapper{
+    display:flex;
+    flex-direction: row;
+
 }
+
+.userSection {
+    background-image: url('https://github.com/samhatesham5/final-project-frontend/blob/main/src/assets/background.png?raw=true');
+    background-repeat: no-repeat;
+    background-position:center;
+    background-size: cover;
+    color: white; 
+    display:flex;
+    flex-basis: 25%; 
+    min-height: 100vh;
+
+}
+
+.userBlurb > svg {
+    border-radius: 20%;
+}
+
+.mainContent {
+    display:flex;
+    flex-basis: 60%; 
+}
+
+
+
+
+
 
 
 /*
@@ -188,6 +216,7 @@ nav {
     .links {
         padding-left: 45%;
     }
+
     
 }
 

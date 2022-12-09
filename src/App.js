@@ -12,7 +12,6 @@ import DashboardPage from './pages/DashboardPage.js';
 import LandingPage from './pages/LandingPage.js';
 import LoginPage from './pages/LoginPage.js';
 import SignUpPage from './pages/SignUpPage.js';
-import TagUs from './pages/TagUs';
 
 //Firebase
 import { initializeApp } from "firebase/app"; 
@@ -121,19 +120,6 @@ function App() {
         userTags = {userTags}
         setUserTags = {setUserTags}
       
-      />,
-    },
-    {
-      path: "/tagging",
-      element: <TagUs
-        isLoggedIn = {isLoggedIn}
-        setIsLoggedIn = {setIsLoggedIn}
-        isLoading = {isLoading}
-        isFollowing = {isFollowing}
-        setIsFollowed = {setIsFollowed}
-        userInfo = {userInfo}
-        userTags = {userTags}
-        setUserTags = {setUserTags}
       />,
     },
 
