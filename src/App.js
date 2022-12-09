@@ -29,7 +29,7 @@ const firebaseConfig = {
 };
 
 function App() {
-  const [appInitialized, setAppInitalized] = useState (false);
+  const [appInitialized, setAppInitalized] = useState ();
   const [isLoading, setIsLoading] = useState (true);
   const [isLoggedIn, setIsLoggedIn] = useState (false);
   const [userInfo, setUserInfo] = useState ({});
@@ -40,9 +40,9 @@ function App() {
 
   useEffect(()=> {
     //Initalize firebase
-    initializeApp(firebaseConfig);
+    const app = initializeApp(firebaseConfig);
     //Set the state to true
-    setAppInitalized(true);
+    setAppInitalized(app);
   }, []); 
 
   useEffect(() => {
@@ -100,12 +100,14 @@ function App() {
     },
     {
       path: "/dashboard/:id",
-      element: <DashboardPage
+      element: <DashboardPage 
+        app = {appInitialized}
         isLoggedIn = {isLoggedIn}
         setIsLoggedIn = {setIsLoggedIn}
         isLoading = {isLoading}
         userInfo = {userInfo}
         setUserInfo = {setUserInfo}
+
       
       />,
     },

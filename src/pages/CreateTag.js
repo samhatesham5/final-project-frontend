@@ -1,6 +1,8 @@
 import React from 'react';
 
-function CreateTag(){
+function CreateTag({userTags, setUserTags, isLoading, userInfo, setIsLoggedIn, isLoggedIn}){
+
+    const createTag = ''; 
     
     return(
         <div className='createTag'>
