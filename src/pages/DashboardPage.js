@@ -23,17 +23,33 @@ const queryData = async(app) => {
     return postData; 
 };
 
-
+const tagQueryData = async(app) => {
+    if (!app) return []; 
+    const db = getFirestore(app);
+    const querySnapshot = await getDocs(collection(db, "tags")); 
+    const userTags= [];
+    const userTagData =[]; 
+    querySnapshot.forEach((doc) => {
+        //Grabbing the post id and storing it into tag data
+       //tagIDs.push(doc.id);
+        userTagData.push(doc.data()); 
+    });
+   console.log(userTagData);
+  //  console.log(tagIDs);
+    return userTagData; 
+};
 
 function DashboardPage( {app, isLoggedIn, setIsLoggedIn, isLoading, userInfo, setUserInfo, userTags, setUserTags}){
 
     const navigate = useNavigate();
     const [postData, setPostData] = useState([]); 
+    const [postTags, setPostTags] = useState([]);
     const [postSuccesful, setPostSucessful] = useState(false); 
 
     useEffect(() => {
         if (!app) return;
         queryData(app).then(setPostData);
+        tagQueryData(app).then(setPostTags);
     }, [app]);
 
     return(

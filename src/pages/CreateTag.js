@@ -2,7 +2,7 @@ import React, {useState, useEffect, useCallback, useMemo} from 'react';
 import WritePost from '../components/WritePost';
 import DashboardPage from './DashboardPage';
 
-import { addDoc, getDocs, getFirestore, collection, querySnapshot, QuerySnapshot } from "firebase/firestore"; 
+import { addDoc, getDocs, getFirestore, collection, querySnapshot, QuerySnapshot, updateDoc, arrayUnion } from "firebase/firestore"; 
 import { getStorage, ref, uploadBytes, uploadBytesResumable } from "firebase/storage";
 import { useNavigate } from 'react-router'; 
 
@@ -17,38 +17,23 @@ const queryData = async(app) => {
         //postIDs.push(doc.id);
         postData.push(doc.data()); 
     });
-   // console.log(postData);
    // console.log(postIDs);
     return postData; 
 };
 
-const tagQueryData = async(app) => {
-    if (!app) return []; 
-    const db = getFirestore(app);
-    const querySnapshot = await getDocs(collection(db, "tags"));
-    const tagData= [];
-    const tagIDs =[]; 
-    querySnapshot.forEach((doc) => {
-        //Grabbing the post id and storing it into tag data
-        tagIDs.push(doc.id);
-        tagData.push(doc.data()); 
-    });
-   // console.log(tagData);
-  //  console.log(tagIDs);
-    return tagData, tagIDs; 
-};
 
 function CreateTag({app, userTags, setUserTags, isLoading, userInfo, setIsLoggedIn, isLoggedIn, setUserInfo}){
 
     const navigate = useNavigate();
     const [postData, setPostData] = useState([]); 
-    const [tagData, setTagData] = useState([]);
+    const [postIDs, setPostIDs] = useState([]);
+    var   [index, setIndex] = useState(0); 
     const [postSuccesful, setPostSucessful] = useState(false); 
 
     useEffect(() => {
         if (!app) return;
         queryData(app).then(setPostData);
-        tagQueryData(app).then(setTagData);
+       // tagQueryData(app).then(setTagIDs);
     
     }, [app]);
 
@@ -62,6 +47,9 @@ function CreateTag({app, userTags, setUserTags, isLoading, userInfo, setIsLogged
             const userName = userInfo.displayName;
             const userID = userInfo.uid; 
             const tagName = e.currentTarget.tags.value;
+            //We're coming up with our own value for the postID
+            //It'll just be a number that increases every time we add a post 
+            var postID = index;
         
 
             console.log(e); 
@@ -73,19 +61,52 @@ function CreateTag({app, userTags, setUserTags, isLoading, userInfo, setIsLogged
                     userID: userID,
                     userName, 
                     tagName, 
+                    postID: postID.toString(), 
                 }); 
 
-                //Issue: I don't know how to identify posts with specific tagName
-                //How do I store the IDs of the new document?
+                //postIDs.push(postID.toString());
+                setIndex(index += 1); 
+
+                const tagRef = await getDocs(collection(db, "tags"));
+
+                //Stores all the tag data into temp (we'll use it to compare tagNames later)
+                const temp = []; 
+
+                tagRef.forEach(async (tag) => { 
+                    temp.push(tag.data()); 
+                });
+
+                console.log(temp); 
+
+                //Checking to see if that tagName is in there
+                const inTag = temp.some(element => {
+                    //console.log(temp.data().tagName); 
+                    if(element.tagName === tagName) {
+                        console.log("it's in there!");
+                        return true;
+                    }
+                    else{
+                        console.log("It's not");
+                        return false
+                    }
+                });
                 
-                  const tagRef = await addDoc(collection(db, "tags"), {
-                    tagName: tagName, 
-                  }); 
-
-
+                if (!inTag) {
+                    const newTag = await addDoc(collection(db, "tags"), {
+                        tagName: tagName, 
+                        postIDs: postIDs.push(postID.toString()),
+                     }); 
+                }
+                else {
+                    const tagNameRef = collection(db, "tags", {tagName});
+                    const existTag = await updateDoc(tagNameRef, { 
+                        postIDs: arrayUnion(postID.toString()), 
+                    }); 
+                }
+            
                 setPostSucessful(true); 
 
-                navigate("/dashboard/:id");
+               // navigate("/dashboard/:id");
 
             }
             catch (e){
@@ -118,18 +139,7 @@ function CreateTag({app, userTags, setUserTags, isLoading, userInfo, setIsLogged
 
         }
 
-        /*
-
-           setUserTags(userID); 
-    
-                const tagRef = await addDoc(collection(db, "tags"), {
-                    tagName: tagName, 
-                    postIds: userTags,
-                });
-        */
-
 , [app, userTags])
-
 
 
     useEffect(() =>  {
