@@ -1,12 +1,15 @@
 import React, { useEffect, useMemo, useCallback, useState} from 'react';
+import { Link } from "react-router-dom";
+//Components and pages
 import DashNav from '../components/DashNav';
 import FindFriends from '../components/FindFriends';
 import Post from '../components/Post';
 import WritePost from '../components/WritePost'; 
+import CreateTag from './CreateTag';
+//Firebase stuff
 import { addDoc, getDocs, getFirestore, collection, querySnapshot } from "firebase/firestore"; 
 import { getStorage, ref, uploadBytes, uploadBytesResumable } from "firebase/storage";
 import { useNavigate } from 'react-router'; 
-
 
 const queryData = async(app) => {
     if (!app) return []; 
@@ -22,7 +25,7 @@ const queryData = async(app) => {
 
 
 
-function DashboardPage( {app, isLoggedIn, setIsLoggedIn, isLoading, userInfo, setUserInfo}){
+function DashboardPage( {app, isLoggedIn, setIsLoggedIn, isLoading, userInfo, setUserInfo, userTags, setUserTags}){
 
     const navigate = useNavigate();
     const [postData, setPostData] = useState([]); 
@@ -32,40 +35,6 @@ function DashboardPage( {app, isLoggedIn, setIsLoggedIn, isLoading, userInfo, se
         if (!app) return;
         queryData(app).then(setPostData);
     }, [app]);
-
-    const createPost = useCallback(
-       async (e) => {
-            e.preventDefault(); 
-            const db = getFirestore(app);
-            const storage = getStorage();
-
-            const caption = e.currentTarget.caption.value; 
-            const userName = userInfo.displayName;
-            const userID = userInfo.uid; 
-        
-
-            console.log(e); 
-
-            //Getting all the info we need for the posts
-            try{
-                const docRef = await addDoc(collection(db, "posts"), {
-                    caption,
-                    userID: userID,
-                    userName, 
-                }); 
-            
-                setPostSucessful(true); 
-
-            }
-            catch (e){
-                console.log("Error adding document: ",  e);
-            }
-    },  [app, userInfo]); 
-
-    useEffect(() =>  {
-        if(!isLoggedIn && !isLoading) navigate("/login");
-    }, [isLoading, isLoggedIn, navigate]); 
-
 
     return(
         <div className = 'dashboardWrapper'> 
@@ -83,12 +52,11 @@ function DashboardPage( {app, isLoggedIn, setIsLoggedIn, isLoading, userInfo, se
             </section>
             {/*Main */}
             <section className='mainContent'>
-                <div>
-                    <WritePost  
-                        createPost= {createPost}
-                        setUserInfo = {setUserInfo}
-                        userInfo = {userInfo}
-                    />
+                <div className = 'writePostWrapper'>
+                    <p>What's on your mind?</p>
+                    <Link to= "/createtag" className='dashPost button'> 
+                        <p>Create a post</p>
+                    </Link> 
                 </div>
                 {/* We'll revisit this because if you search for friends, different component shows up there*/}
                 <div className='dashContent'>
@@ -99,6 +67,7 @@ function DashboardPage( {app, isLoggedIn, setIsLoggedIn, isLoading, userInfo, se
                             caption = {postData.caption}
                             userID = {postData.userID}
                             userName = {postData.userName}
+                            userTags = {postData.tags}
                         />
                     ))}
                 </div>

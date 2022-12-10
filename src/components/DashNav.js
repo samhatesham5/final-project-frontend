@@ -5,7 +5,9 @@ import { useNavigate } from 'react-router';
 
 //Font Awesome 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {faUser} from '@fortawesome/free-solid-svg-icons';
+import {faRightFromBracket} from '@fortawesome/free-solid-svg-icons';
+
+//{isLoggedIn && <p className="signOut" onClick={() => logout()}>Sign Out</p>}
 
 function DashNav( {isLoggedIn, setIsLoggedIn, isLoading, userInfo, setUserInfo} ){
     //Navigating out of dashboard
@@ -32,22 +34,25 @@ function DashNav( {isLoggedIn, setIsLoggedIn, isLoading, userInfo, setUserInfo} 
 
 
     return(
-        <div>
+        <div className = 'dashWrapper'>
             <div className='userBlurb'>
-                <img src="" alt=""/>
+                <img src="https://github.com/samhatesham5/final-project-frontend/blob/main/src/assets/user.png?raw=true" alt="user profile icon"/>
                 {/*They can't sign in with username but this is what's displayed */}
                 <p>Username</p>
             </div>
             {/*On click, we disply differ */}
-            <p>Your Posts</p>
-            <p>Tags</p>
-            <div className='tags'>
-                {/*Can be done by mapping over the array of tags, right? */}
-                <p>Tag 1</p>
-                <p>Tag 2</p>
-                <p>Tag 3</p>
+            <div className='userLinks'>
+                <p>Your Posts</p>
+                <p>Tags</p>
+                <div className='tags'>
+                    {/*Can be done by mapping over the array of tags, right? */}
+                    {/*Alter these so that they're responsive*/}
+                    <p>Tag 1</p>
+                    <p>Tag 2</p>
+                    <p>Tag 3</p>
+                </div>
             </div>
-            {isLoggedIn && <p className="signOut" onClick={() => logout()}>Sign Out</p>}
+            {isLoggedIn &&<FontAwesomeIcon className="signOut" onClick={() => logout()} icon={faRightFromBracket}/>}
         </div>
     );
 

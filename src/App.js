@@ -106,6 +106,8 @@ function App() {
         isLoading = {isLoading}
         userInfo = {userInfo}
         setUserInfo = {setUserInfo}
+        userTags = {userTags}
+        setUserTags = {setUserTags}
 
       
       />,
@@ -113,12 +115,14 @@ function App() {
     {
       path: "/createtag",
       element: <CreateTag
-        isLoggedIn = {isLoggedIn}
-        setIsLoggedIn = {setIsLoggedIn}
-        isLoading = {isLoading}
-        userInfo = {userInfo}
-        userTags = {userTags}
-        setUserTags = {setUserTags}
+      app = {appInitialized}
+      isLoggedIn = {isLoggedIn}
+      setIsLoggedIn = {setIsLoggedIn}
+      isLoading = {isLoading}
+      userInfo = {userInfo}
+      setUserInfo = {setUserInfo}
+      userTags = {userTags}
+      setUserTags = {setUserTags}
       
       />,
     },
