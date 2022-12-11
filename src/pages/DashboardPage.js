@@ -34,8 +34,7 @@ const tagQueryData = async(app) => {
        //tagIDs.push(doc.id);
         userTagData.push(doc.data()); 
     });
-   console.log(userTagData);
-  //  console.log(tagIDs);
+  console.log(userTagData);
     return userTagData; 
 };
 
@@ -63,6 +62,7 @@ function DashboardPage( {app, isLoggedIn, setIsLoggedIn, isLoading, userInfo, se
                         isLoading = {isLoading}
                         userInfo = {userInfo}
                         setUserInfo = {setUserInfo}
+                        postTags = {postTags}
                     /> 
                 </div>
             </section>
@@ -87,10 +87,6 @@ function DashboardPage( {app, isLoggedIn, setIsLoggedIn, isLoading, userInfo, se
                         />
                     ))}
                 </div>
-            </section>
-            {/* Should only be one account there */}
-            <section className=''>
-                <p>Placeholder until we figure something out</p>
             </section>
         </div>
     );

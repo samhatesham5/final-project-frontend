@@ -2,7 +2,7 @@ import React from 'react';
 import CreateTag from '../pages/CreateTag';
 import TagForm from './TagForm';
 
-function WritePost({createPost, userInfo, setUserInfo, createTag}){
+function WritePost({createPost, userInfo, setUserInfo}){
 
     {/* This is the issue.. two on submits and idk how to make it work*/}
     return(

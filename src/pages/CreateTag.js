@@ -2,7 +2,7 @@ import React, {useState, useEffect, useCallback, useMemo} from 'react';
 import WritePost from '../components/WritePost';
 import DashboardPage from './DashboardPage';
 
-import { addDoc, getDocs, getFirestore, collection, querySnapshot, QuerySnapshot, updateDoc, arrayUnion } from "firebase/firestore"; 
+import { doc, firestore, addDoc, getDocs, getFirestore, collection, querySnapshot, QuerySnapshot, updateDoc, arrayUnion, Firestore, getDoc, query, where } from "firebase/firestore"; 
 import { getStorage, ref, uploadBytes, uploadBytesResumable } from "firebase/storage";
 import { useNavigate } from 'react-router'; 
 
@@ -50,63 +50,91 @@ function CreateTag({app, userTags, setUserTags, isLoading, userInfo, setIsLogged
             //We're coming up with our own value for the postID
             //It'll just be a number that increases every time we add a post 
             var postID = index;
+            //If a tag exists, we store all previous values from the array in here
+            var postIDsPlaceholder = [];
         
 
             console.log(e); 
 
+
             //Getting all the info we need for the posts
             try{
+                //--- Creating a post---
                 const docRef = await addDoc(collection(db, "posts"), {
                     caption,
                     userID: userID,
                     userName, 
                     tagName, 
-                    postID: postID.toString(), 
+                    postID: postID, 
                 }); 
 
-                //postIDs.push(postID.toString());
-                setIndex(index += 1); 
-
+                //--- Creating our tags ---
                 const tagRef = await getDocs(collection(db, "tags"));
 
                 //Stores all the tag data into temp (we'll use it to compare tagNames later)
                 const temp = []; 
+                //When we finally find the tagName later, we'll store it in here
+                var foundTag = '';
 
-                tagRef.forEach(async (tag) => { 
-                    temp.push(tag.data()); 
+                tagRef.forEach(async (tag) => {
+                    temp.push([tag.id, tag.data()]); 
                 });
 
-                console.log(temp); 
 
                 //Checking to see if that tagName is in there
                 const inTag = temp.some(element => {
-                    //console.log(temp.data().tagName); 
-                    if(element.tagName === tagName) {
+                    console.log(temp); 
+                    if(element[1].tagName === tagName) {
                         console.log("it's in there!");
+                        //Storing that specific tagName
+                       foundTag = element[1].tagName;
+                       //Storing the values of postIDs
+                        postIDsPlaceholder = element[1].postIDs;
+                        console.log(postIDsPlaceholder);
                         return true;
                     }
                     else{
+                        //If our tagName is not in there, set to an empty array
+                        postIDsPlaceholder = []; 
                         console.log("It's not");
                         return false
                     }
                 });
                 
+                //Add previous values (or empty array) to our postIds array
+                console.log(postID);
+                postIDsPlaceholder.push(postID);
+     
+                //If the value we entered is not inside our tag database, add a new tag
                 if (!inTag) {
                     const newTag = await addDoc(collection(db, "tags"), {
+                        name: tagName, 
                         tagName: tagName, 
-                        postIDs: postIDs.push(postID.toString()),
+                        postIDs: [...postIDsPlaceholder],
                      }); 
                 }
                 else {
-                    const tagNameRef = collection(db, "tags", {tagName});
+                    //If our tag already exists, we update the tags postIDs with the new id in there
+                    const tagNameSnap= await getDocs(collection(db, "tags"));
+                    const tagNameQuery = query(collection(db, "tags"), where("tagName", "==", foundTag));
+                    const tagNameGet = await getDocs(tagNameQuery);
+                    
+                    var tagNameRef;
+
+                    tagNameGet.forEach((doc) => {
+                        tagNameRef = doc.ref; 
+                        return tagNameRef; 
+                    })
                     const existTag = await updateDoc(tagNameRef, { 
-                        postIDs: arrayUnion(postID.toString()), 
+                        //Maybe just create a whole new array and just add to that and toss it in here
+                        postIDs: [...postIDsPlaceholder], 
                     }); 
                 }
             
+                //Increase index (so that we can keep increaseing postID num)
+                 setIndex(index += 1);
                 setPostSucessful(true); 
-
-               // navigate("/dashboard/:id");
+                navigate("/dashboard/:id");
 
             }
             catch (e){
@@ -114,33 +142,7 @@ function CreateTag({app, userTags, setUserTags, isLoading, userInfo, setIsLogged
             }
 
         
-    },  [app, userInfo, userTags]); 
-
-    const createTag = useCallback(
-
-        async (e) => {
-            e.preventDefault(); 
-            const db = getFirestore(app);
-            const storage = getStorage();
-
-            //This function should check to see if that tag name already exists
-            //If it does, we want to add it to the array of tags
-
-            try{
-                
-            
-                setPostSucessful(true); 
-
-            }
-            catch (e){
-                console.log("Error adding document: ",  e);
-            }
-            
-
-        }
-
-, [app, userTags])
-
+    },  [app, userInfo, userTags, postIDs]); 
 
     useEffect(() =>  {
         if(!isLoggedIn && !isLoading) navigate("/login");
@@ -161,7 +163,6 @@ function CreateTag({app, userTags, setUserTags, isLoading, userInfo, setIsLogged
                             createPost= {createPost}
                             setUserInfo = {setUserInfo}
                             userInfo = {userInfo}
-                            createTag = {createTag}
                         />
                 </section>
             </div>

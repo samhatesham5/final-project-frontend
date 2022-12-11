@@ -284,7 +284,6 @@ Styling dashnav
 
 .mainContent {
     display:flex;
-    flex-basis: 60%; 
     flex-direction: column;
     padding: 24px; 
 }
