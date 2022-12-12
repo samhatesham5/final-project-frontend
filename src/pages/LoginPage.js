@@ -54,14 +54,18 @@ function LoginPage( { isLoggedIn, setIsLoggedIn, setUserInfo } ){
     }, [setErrors, setIsLoggedIn, setUserInfo]);
 
     return(
-        <div>
-            <h1>Login</h1> 
-            <LoginForm loginUser = {loginUser}/>
-            <p>{error}</p>
-            <p>Don't have an account?</p>
-            <Link to="/signup">
-                <p>Create an account</p>
-            </Link>
+        <div className='wholeLoginPage'>
+            <div className='loginPageWrapper'>
+                <h1>Login</h1> 
+                <div className='beforeForm'>
+                    <p>Don't have an account?</p>
+                    <Link to="/signup" className="linkToForm">
+                        <p>Create an account</p>
+                    </Link>
+                </div>
+                <LoginForm loginUser = {loginUser}/>
+                <p>{error}</p>
+        </div>
         </div>
     );
 

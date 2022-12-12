@@ -10,7 +10,7 @@ function SignUpPage( { isLoggedIn, setIsLoggedIn, setUserInfo, userInfo } ){
     
     //If user is logged in, navigate to to the little tutorial 
     useEffect(() => {
-        if(isLoggedIn) return navigate("/createtag")
+        if(isLoggedIn) return navigate("/dashboard/:id")
     }, [isLoggedIn, navigate]);
 
     //Temp playholder for login and errors
@@ -62,17 +62,19 @@ function SignUpPage( { isLoggedIn, setIsLoggedIn, setUserInfo, userInfo } ){
         }, [setErrors, setIsLoggedIn, setUserInfo]);
 
     return(
-        <div>
-            <h1>Sign Up</h1> 
+        <div className = "wholeLoginPage">
+             <div className='loginPageWrapper'>
+             <h1>Create An Account</h1> 
+                <div className='beforeForm'>
+                    <p>Have an account?</p>
+                    <Link to="/login" className='linkToForm'>Login</Link>
+                </div>
             <SignUpForm signUpUser = {signUpUser} /> 
             <p>{error}</p>
-            <p>Have an account?</p>
-            <Link to="/login">
-                <p >Login</p>
-            </Link>
         </div>
-    );
+    </div>
 
-}
+
+);}
 
 export default SignUpPage; 

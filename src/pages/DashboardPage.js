@@ -19,7 +19,6 @@ const queryData = async(app) => {
     querySnapshot.forEach((doc) => {
         postData.push(doc.data()); 
     });
-    console.log(postData);
     return postData; 
 };
 
@@ -34,7 +33,6 @@ const tagQueryData = async(app) => {
        //tagIDs.push(doc.id);
         userTagData.push(doc.data()); 
     });
-  console.log(userTagData);
     return userTagData; 
 };
 
@@ -43,13 +41,52 @@ function DashboardPage( {app, isLoggedIn, setIsLoggedIn, isLoading, userInfo, se
     const navigate = useNavigate();
     const [postData, setPostData] = useState([]); 
     const [postTags, setPostTags] = useState([]);
-    const [postSuccesful, setPostSucessful] = useState(false); 
+    var   [targetPosts, setTargetPosts] = useState([]);
+    const [displayedPosts, setDisplayedPosts] = useState([]);
+    const [dashUpdated, setDashUpdated] = useState(false);
 
     useEffect(() => {
         if (!app) return;
         queryData(app).then(setPostData);
         tagQueryData(app).then(setPostTags);
+
     }, [app]);
+
+    const yourPosts = useCallback( () => {
+        targetPosts = [];
+        postData.some(post => {
+            targetPosts.push(post); 
+        });
+
+        setDisplayedPosts(targetPosts);
+    }, [displayedPosts]);
+
+       //Attempting to default to show all the posts you've ever created
+       //ISSUE: Call yourPosts() on the first render
+    useEffect(() => {
+        yourPosts(); 
+    }, []);
+
+
+    //You'll pass the tagName into here
+    const displayTagged = useCallback (
+        async(tag) => {
+            const tagName = tag; 
+
+                targetPosts = [];
+                 //Find posts with the same tagName
+                const findTagged = postData.some(post => {
+                    
+                    if(post.tagName === tag) {
+                        //Store them in targetPosts
+                        targetPosts.push(post); 
+                    }
+            });
+
+            //Switch from postData to targetPosts
+            setDisplayedPosts(targetPosts);
+
+        }, [displayedPosts]);
 
     return(
         <div className = 'dashboardWrapper'> 
@@ -63,6 +100,9 @@ function DashboardPage( {app, isLoggedIn, setIsLoggedIn, isLoading, userInfo, se
                         userInfo = {userInfo}
                         setUserInfo = {setUserInfo}
                         postTags = {postTags}
+                        postData = {postData}
+                        yourPosts = {yourPosts}
+                        displayTagged = {displayTagged}
                     /> 
                 </div>
             </section>
@@ -75,15 +115,15 @@ function DashboardPage( {app, isLoggedIn, setIsLoggedIn, isLoading, userInfo, se
                     </Link> 
                 </div>
                 {/* We'll revisit this because if you search for friends, different component shows up there*/}
-                <div className='dashContent'>
+                <div className='dashContent' >
                     {/* Will store all of our posts and map over them */}
-                    {postData.map((postData, i) => (
+                    {displayedPosts.map((displayedPosts, i) => (
                         <Post 
                             key = {i}
-                            caption = {postData.caption}
-                            userID = {postData.userID}
-                            userName = {postData.userName}
-                            userTags = {postData.tags}
+                            caption = {displayedPosts.caption}
+                            userID = {displayedPosts.userID}
+                            userName = {displayedPosts.userName}
+                            userTags = {displayedPosts.tagName}
                         />
                     ))}
                 </div>

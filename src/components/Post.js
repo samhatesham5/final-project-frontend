@@ -18,8 +18,7 @@ function Post({ caption, imageAlt, imageURL, userName, userID, userTags}){
             <hr />
             <div className='postCaption'>
                 <p className="caption">{caption}</p>
-                <p>{userTags}</p>
-
+                <p>Tag: {userTags}</p>
             </div>
         </div>
     );

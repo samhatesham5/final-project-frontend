@@ -10,7 +10,7 @@ function LoginForm({loginUser}) {
                 {/*Password label*/}
                 <label htmlFor="password">Password</label>
                 <input type="password" name="password"/> 
-                <button type="submit">Submit</button>
+                <button type="submit" className='button'>Submit</button>
         </form>
     );
 

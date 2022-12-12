@@ -65,7 +65,7 @@ function CreateTag({app, userTags, setUserTags, isLoading, userInfo, setIsLogged
                     userID: userID,
                     userName, 
                     tagName, 
-                    postID: postID, 
+                    postID: postID,  
                 }); 
 
                 //--- Creating our tags ---
@@ -109,7 +109,7 @@ function CreateTag({app, userTags, setUserTags, isLoading, userInfo, setIsLogged
                 if (!inTag) {
                     const newTag = await addDoc(collection(db, "tags"), {
                         name: tagName, 
-                        tagName: tagName, 
+                        tagName: tagName,
                         postIDs: [...postIDsPlaceholder],
                      }); 
                 }
