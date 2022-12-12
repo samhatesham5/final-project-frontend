@@ -30,7 +30,7 @@ function DashNav( {allPosts, yourPosts, postData, postTags, isLoggedIn, setIsLog
 
     //If you signout, it should log you out of the dashboard
     useEffect(() => {
-        if(!isLoggedIn) return navigate("/login")
+        if(!isLoggedIn) return navigate("/");
     }, [isLoggedIn, navigate]);
 
 
@@ -51,7 +51,7 @@ function DashNav( {allPosts, yourPosts, postData, postTags, isLoggedIn, setIsLog
                     {/*Alter these so that they're responsive*/}
                     {postTags.map((postTags, x) => (
                         <Link to="/dashboard/:id" className ="tagLinks" onClick={() => displayTagged(postTags.tagName)}>
-                            {postTags.tagName}</Link>
+                            #{postTags.tagName}</Link>
                     ))}
                 </div>
             </div>

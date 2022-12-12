@@ -12,10 +12,6 @@ function Post({ caption, imageAlt, imageURL, userName, userID, userTags}){
                 <p link to={`user/${userID}`}>{userName}</p>
             </div>
             <hr />
-            <div className='postImage'>
-                <img src={imageURL} alt={imageAlt}/>
-            </div>
-            <hr />
             <div className='postCaption'>
                 <p className="caption">{caption}</p>
                 <p>Tag: {userTags}</p>

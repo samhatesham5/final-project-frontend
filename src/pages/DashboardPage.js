@@ -8,7 +8,6 @@ import WritePost from '../components/WritePost';
 import CreateTag from './CreateTag';
 //Firebase stuff
 import { addDoc, getDocs, getFirestore, collection, querySnapshot } from "firebase/firestore"; 
-import { getStorage, ref, uploadBytes, uploadBytesResumable } from "firebase/storage";
 import { useNavigate } from 'react-router'; 
 
 const queryData = async(app) => {
@@ -48,7 +47,6 @@ function DashboardPage( {app, isLoggedIn, setIsLoggedIn, isLoading, userInfo, se
         if (!app) return;
         queryData(app).then(setPostData);
         tagQueryData(app).then(setPostTags);
-        
 
     }, [app]);
 
@@ -59,7 +57,6 @@ function DashboardPage( {app, isLoggedIn, setIsLoggedIn, isLoading, userInfo, se
                 targetPosts.push(post); 
             }
         });
-
         setDisplayedPosts(targetPosts);
     }, [displayedPosts]);
     

@@ -3,10 +3,12 @@
 --- Default styles for whole page ---
 
 */
+@import url('https://fonts.googleapis.com/css2?family=Inter+Tight&family=Rubik:ital,wght@0,400;0,500;1,400;1,500&display=swap');
 
 * {
     margin: 0;
     box-sizing: border-box;
+    font-family: 'Rubik', sans-serif;
 }
 
 /*
@@ -183,6 +185,9 @@ nav {
     font-weight: bold;
 }
 
+.formInput, .FormElement > label, .writePostButton {
+    margin: 0 50px 0 50px;
+}
 /*
 
 --- POST ---
@@ -238,6 +243,7 @@ nav {
 
 .postCaption > p:last-of-type {
     font-style: italic;
+    padding-top: 10px;
 }
 
 

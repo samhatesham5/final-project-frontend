@@ -6,11 +6,11 @@ function LoginForm({loginUser}) {
             <form className="FormElement" onSubmit={(e) => loginUser(e)}>
                 {/*UserName label*/}
                 <label htmlFor="email">Email</label>
-                <input type="text" name="email"/>
+                <input type="text" name="email"className="formInput"/>
                 {/*Password label*/}
                 <label htmlFor="password">Password</label>
-                <input type="password" name="password"/> 
-                <button type="submit" className='button'>Submit</button>
+                <input type="password" name="password" className="formInput"/> 
+                <button type="submit" className='writePostButton button'>Submit</button>
         </form>
     );
 

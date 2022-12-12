@@ -9,9 +9,9 @@ function WritePost({createPost, userInfo, setUserInfo}){
         <div>
             <form className='FormElement' onSubmit={(e) => createPost(e)}>
             <label htmlFor="caption">Write a caption</label>
-            <input type="text" name="caption"/>
+            <input type="text" name="caption" className="formInput"/>
             <label htmlFor="tags">Add create tag</label>
-             <input type = "tags" name="tags"/>
+             <input type = "tags" name="tags" className="formInput"/>
             <button type="submit" className='writePostButton button'>Submit</button>
              </form>
         </div>
