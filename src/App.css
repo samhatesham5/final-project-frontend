@@ -217,6 +217,13 @@ nav {
 
 .writePostWrapper > p {
     padding: 10px;
+    margin-bottom: 10px;
+    border: solid #05BC74;
+    border-radius: 28px;
+    font-style: italic;
+    max-width: 600px;
+    width: 100%;
+    text-align: center;
 }
 
 .dashPost {
@@ -284,7 +291,7 @@ Styling dashnav
 }
 
 .userBlurb > p{
-    padding: 5px;
+    padding: 10px 0 10px 10px;
 }
 
 .userLinks {
@@ -340,10 +347,6 @@ Styling dashnav
     margin-bottom: 20px; 
 }
 
-.writePostWrapper > p {
-    font-style: italic;
-}
-
 
 .tagLinks{
     display:flex;
@@ -357,6 +360,10 @@ Styling dashnav
 
 .tagLinks:hover, .linkToForm{
     color:#05BC74; 
+}
+
+.userLinks > p {
+    margin-top: 20px; 
 }
 
 /*

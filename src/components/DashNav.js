@@ -9,7 +9,7 @@ import {faRightFromBracket} from '@fortawesome/free-solid-svg-icons';
 
 //{isLoggedIn && <p className="signOut" onClick={() => logout()}>Sign Out</p>}
 
-function DashNav( {yourPosts, postData, postTags, isLoggedIn, setIsLoggedIn, isLoading, userInfo, setUserInfo, displayTagged} ){
+function DashNav( {allPosts, yourPosts, postData, postTags, isLoggedIn, setIsLoggedIn, isLoading, userInfo, setUserInfo, displayTagged} ){
     //Navigating out of dashboard
     const navigate = useNavigate(); 
     //Logout function
@@ -43,6 +43,7 @@ function DashNav( {yourPosts, postData, postTags, isLoggedIn, setIsLoggedIn, isL
             </div>
             {/*On click, we disply differ */}
             <div className='userLinks'>
+                <Link to="/dashboard/:id" className='tagLinks' onClick={() => allPosts()}>All Posts</Link>
                 <Link to ="/dashboard/:id" className ="tagLinks" onClick={() => yourPosts()}>Your Posts</Link>
                 <p>Tags</p>
                 <div className='tags'>

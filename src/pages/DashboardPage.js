@@ -43,30 +43,33 @@ function DashboardPage( {app, isLoggedIn, setIsLoggedIn, isLoading, userInfo, se
     const [postTags, setPostTags] = useState([]);
     var   [targetPosts, setTargetPosts] = useState([]);
     const [displayedPosts, setDisplayedPosts] = useState([]);
-    const [dashUpdated, setDashUpdated] = useState(false);
 
     useEffect(() => {
         if (!app) return;
         queryData(app).then(setPostData);
         tagQueryData(app).then(setPostTags);
+        
 
     }, [app]);
 
     const yourPosts = useCallback( () => {
         targetPosts = [];
         postData.some(post => {
-            targetPosts.push(post); 
+            if(post.userName == userInfo.displayName) {
+                targetPosts.push(post); 
+            }
         });
 
         setDisplayedPosts(targetPosts);
     }, [displayedPosts]);
-
-       //Attempting to default to show all the posts you've ever created
-       //ISSUE: Call yourPosts() on the first render
-    useEffect(() => {
-        yourPosts(); 
-    }, []);
-
+    
+    const allPosts = useCallback(() => {
+        targetPosts = [];
+        postData.some(post => {
+            targetPosts.push(post);
+        }); 
+        setDisplayedPosts(targetPosts);
+    }, [displayedPosts]);
 
     //You'll pass the tagName into here
     const displayTagged = useCallback (
@@ -102,6 +105,7 @@ function DashboardPage( {app, isLoggedIn, setIsLoggedIn, isLoading, userInfo, se
                         postTags = {postTags}
                         postData = {postData}
                         yourPosts = {yourPosts}
+                        allPosts = {allPosts}
                         displayTagged = {displayTagged}
                     /> 
                 </div>

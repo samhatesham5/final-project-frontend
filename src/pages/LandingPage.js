@@ -19,7 +19,7 @@ function LandingPage(){
                         <h1>You're it!</h1> 
                         <FontAwesomeIcon icon={faTag}/>
                     </div>
-                    <h2>Organize your friends' posts by tags.</h2>
+                    <h2>"It's like Instagram, Tumblr, and Pinterest had a baby!"</h2>
                     <Link to="/signup" className='landingButton button'>
                         <p>Get Started</p>
                     </Link>
