@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useCallback}from 'react';
+import React, {useEffect}from 'react';
 import { Link } from "react-router-dom";
 import { getAuth, signOut } from "firebase/auth";
 import { useNavigate } from 'react-router'; 
@@ -26,7 +26,6 @@ function DashNav( {allPosts, yourPosts, postData, postTags, isLoggedIn, setIsLog
             console.warn(error); 
         })
     };
-
 
     //If you signout, it should log you out of the dashboard
     useEffect(() => {

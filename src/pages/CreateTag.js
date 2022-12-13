@@ -1,11 +1,8 @@
-import React, {useState, useEffect, useCallback, useMemo} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import WritePost from '../components/WritePost';
-import DashboardPage from './DashboardPage';
 
-import { doc, firestore, addDoc, getDocs, getFirestore, collection, querySnapshot, QuerySnapshot, updateDoc, arrayUnion, Firestore, getDoc, query, where } from "firebase/firestore"; 
-import { getStorage, ref, uploadBytes, uploadBytesResumable } from "firebase/storage";
+import { addDoc, getDocs, getFirestore, collection, updateDoc, query, where } from "firebase/firestore"; 
 import { useNavigate } from 'react-router'; 
-import { Link } from 'react-router-dom';
 
 const queryData = async(app) => {
     if (!app) return []; 
@@ -60,7 +57,7 @@ function CreateTag({app, userTags, setUserTags, isLoading, userInfo, setIsLogged
                 
                 //--- Creating a post---
                 
-                const docRef = await addDoc(collection(db, "posts"), {
+                 await addDoc(collection(db, "posts"), {
                     caption,
                     userID: userID,
                     userName, 
@@ -102,7 +99,7 @@ function CreateTag({app, userTags, setUserTags, isLoading, userInfo, setIsLogged
      
                 //If the value we entered is not inside our tag database, add a new tag
                 if (!inTag) {
-                    const newTag = await addDoc(collection(db, "tags"), {
+                    await addDoc(collection(db, "tags"), {
                         name: tagName, 
                         tagName: tagName,
                         postIDs: [...postIDsPlaceholder],
@@ -110,7 +107,7 @@ function CreateTag({app, userTags, setUserTags, isLoading, userInfo, setIsLogged
                 }
                 else {
                     //If our tag already exists, we update the tags postIDs with the new id in there
-                    const tagNameSnap= await getDocs(collection(db, "tags"));
+                    //const tagNameSnap= await getDocs(collection(db, "tags"));
                     const tagNameQuery = query(collection(db, "tags"), where("tagName", "==", foundTag));
                     const tagNameGet = await getDocs(tagNameQuery);
                     
@@ -120,14 +117,14 @@ function CreateTag({app, userTags, setUserTags, isLoading, userInfo, setIsLogged
                         tagNameRef = doc.ref; 
                         return tagNameRef; 
                     })
-                    const existTag = await updateDoc(tagNameRef, { 
+                    await updateDoc(tagNameRef, { 
                         //Maybe just create a whole new array and just add to that and toss it in here
                         postIDs: [...postIDsPlaceholder], 
                     }); 
                 }
             
                 //Increase index (so that we can keep increaseing postID num)
-                setIndex(index += 1);
+                setIndex(index++);
                 setPostSucessful(true); 
                 navigate("/dashboard/:id");
 
@@ -137,7 +134,7 @@ function CreateTag({app, userTags, setUserTags, isLoading, userInfo, setIsLogged
             }
 
         
-    },  [app, userInfo, userTags, postIDs]); 
+    },  [app, userInfo, index, navigate]); 
 
     useEffect(() =>  {
         if(!isLoggedIn && !isLoading) navigate("/login");
