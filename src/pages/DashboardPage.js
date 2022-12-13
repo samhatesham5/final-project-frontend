@@ -1,13 +1,10 @@
-import React, { useEffect, useMemo, useCallback, useState} from 'react';
+import React, { useEffect, useCallback, useState} from 'react';
 import { Link } from "react-router-dom";
 //Components and pages
 import DashNav from '../components/DashNav';
-import FindFriends from '../components/FindFriends';
 import Post from '../components/Post';
-import WritePost from '../components/WritePost'; 
-import CreateTag from './CreateTag';
 //Firebase stuff
-import { addDoc, getDocs, getFirestore, collection, querySnapshot } from "firebase/firestore"; 
+import { getDocs, getFirestore, collection } from "firebase/firestore"; 
 import { useNavigate } from 'react-router'; 
 
 const queryData = async(app) => {
@@ -57,6 +54,7 @@ function DashboardPage( {app, isLoggedIn, setIsLoggedIn, isLoading, userInfo, se
                 targetPosts.push(post); 
             }
         });
+        setTargetPosts(targetPosts);
         setDisplayedPosts(targetPosts);
     }, [displayedPosts]);
     
@@ -65,6 +63,7 @@ function DashboardPage( {app, isLoggedIn, setIsLoggedIn, isLoading, userInfo, se
         postData.some(post => {
             targetPosts.push(post);
         }); 
+        setTargetPosts(targetPosts);
         setDisplayedPosts(targetPosts);
     }, [displayedPosts]);
 

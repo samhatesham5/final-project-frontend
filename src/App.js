@@ -12,6 +12,7 @@ import DashboardPage from './pages/DashboardPage.js';
 import LandingPage from './pages/LandingPage.js';
 import LoginPage from './pages/LoginPage.js';
 import SignUpPage from './pages/SignUpPage.js';
+import Profile from './pages/Profile';
 
 //Firebase
 import { initializeApp } from "firebase/app"; 
@@ -35,7 +36,6 @@ function App() {
   //New set states 
   //We want to tag other users' posts so we need information about the user's tags and who we're following
   const [userTags, setUserTags] = useState([]); 
-  const [isFollowing, setIsFollowed] = useState(false);
 
   useEffect(()=> {
     //Initalize firebase
@@ -125,6 +125,12 @@ function App() {
       setUserTags = {setUserTags}
       
       />,
+    },
+    {
+      path: "/profile",
+      element: <Profile 
+      userInfo = {userInfo}
+        />,
     },
 
 

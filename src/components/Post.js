@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-dom'; 
 
 function Post({ caption, imageAlt, imageURL, userName, userID, userTags}){
     //We'll need the user's info because this is how we'll display it in an individual post

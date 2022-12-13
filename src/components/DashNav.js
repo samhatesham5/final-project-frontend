@@ -42,6 +42,7 @@ function DashNav( {allPosts, yourPosts, postData, postTags, isLoggedIn, setIsLog
             </div>
             {/*On click, we disply differ */}
             <div className='userLinks'>
+                <Link to="/profile" className='tagLinks'>Profile</Link>
                 <Link to="/dashboard/:id" className='tagLinks' onClick={() => allPosts()}>All Posts</Link>
                 <Link to ="/dashboard/:id" className ="tagLinks" onClick={() => yourPosts()}>Your Posts</Link>
                 <p>Tags</p>
